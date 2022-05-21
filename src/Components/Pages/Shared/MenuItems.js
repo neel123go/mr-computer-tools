@@ -11,7 +11,7 @@ const MenuItems = ({ setActive, active }) => {
 
             <li><NavLink className='focus:text-primary text-gray-200 px-4 rounded-lg py-2' to='/'>home</NavLink></li>
             <li><NavLink className='focus:text-primary text-gray-200 px-4 rounded-lg py-2' to='/'>About</NavLink></li>
-            <li><NavLink className='focus:text-primary text-gray-200 px-4 rounded-lg py-2' to='/'>Contact</NavLink></li>
+            <li><NavLink className='bg-primary text-gray-800 px-4 rounded-lg py-2' to='/login'>Login</NavLink></li>
         </ul>
     );
 };
