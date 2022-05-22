@@ -5,6 +5,7 @@ import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-fireb
 import auth from '../../../Firebase.init';
 import SocialLogin from './SocialLogin';
 import Loading from '../Shared/Loading';
+import useToken from '../../../hooks/useToken';
 
 const Signup = () => {
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
@@ -16,36 +17,20 @@ const Signup = () => {
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
     const [updateProfile, updating, profileUpdateError] = useUpdateProfile(auth);
+    const [token] = useToken(user);
     const navigate = useNavigate();
 
     const onSubmit = async (data) => {
         await createUserWithEmailAndPassword(data.email, data.password);
         await updateProfile({ displayName: data.userName });
-        const user = {
-            userName: data.userName,
-            email: data.email
-        };
-
-        fetch('http://localhost:5000/user', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(user)
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                reset();
-            })
     };
 
     // Navigate user
     useEffect(() => {
-        if (user) {
+        if (token) {
             navigate('/home');
         }
-    }, [user, navigate]);
+    }, [token, navigate]);
 
     // Handle error
     if (error || profileUpdateError) {
