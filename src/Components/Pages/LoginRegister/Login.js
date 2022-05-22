@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import SocialLogin from './SocialLogin';
 
 const Login = () => {
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
@@ -70,10 +71,9 @@ const Login = () => {
                             <div className="form-control mt-6">
                                 <button className="btn btn-primary">Login</button>
                             </div>
-                            <div className="divider">OR</div>
-                            <button className='btn btn-outline btn-warning w-full'>Continue With Google</button>
-                            <p className='text-center mt-3'>Don't have any account? <Link to='/signup' className='text-info link link-hover'>Sign Up</Link></p>
                         </form>
+                        <SocialLogin></SocialLogin>
+                        <p className='text-center mt-3'>Don't have any account? <Link to='/signup' className='text-info link link-hover'>Sign Up</Link></p>
                     </div>
                 </div>
             </div>

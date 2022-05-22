@@ -1,13 +1,40 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
+import auth from '../../../Firebase.init';
+import SocialLogin from './SocialLogin';
+import Loading from '../Shared/Loading';
 
 const Signup = () => {
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
-    const onSubmit = data => {
-        console.log(data)
+    let errorMessage;
+    const [
+        createUserWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useCreateUserWithEmailAndPassword(auth);
+    const [updateProfile, updating, profileUpdateError] = useUpdateProfile(auth);
+
+    const onSubmit = async (data) => {
+        await createUserWithEmailAndPassword(data.email, data.password);
+        await updateProfile({ displayName: data.userName });
         reset();
     };
+
+    if (user) {
+        console.log(user);
+    }
+
+    if (error || profileUpdateError) {
+        errorMessage = <p className='text-error text-center'>{error?.message || profileUpdateError?.message}</p>
+    }
+
+    if (loading || updating) {
+        return <Loading></Loading>;
+    }
+
     return (
         <div className="hero min-h-screen bg-base-200">
             <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
@@ -16,6 +43,7 @@ const Signup = () => {
 
 
                     <form onSubmit={handleSubmit(onSubmit)}>
+                        {errorMessage}
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text text-lg">User Name</span>
@@ -97,10 +125,9 @@ const Signup = () => {
                         <div className="form-control mt-6">
                             <button className="btn btn-primary">Sign Up</button>
                         </div>
-                        <div className="divider">OR</div>
-                        <button className='btn btn-outline btn-warning w-full'>Continue With Google</button>
-                        <p className='text-center mt-3'>Already have an account? <Link to='/login' className='text-info link link-hover'>Login</Link></p>
                     </form>
+                    <SocialLogin></SocialLogin>
+                    <p className='text-center mt-3'>Already have an account? <Link to='/login' className='text-info link link-hover'>Login</Link></p>
 
 
                 </div>
