@@ -21,7 +21,23 @@ const Signup = () => {
     const onSubmit = async (data) => {
         await createUserWithEmailAndPassword(data.email, data.password);
         await updateProfile({ displayName: data.userName });
-        reset();
+        const user = {
+            userName: data.userName,
+            email: data.email
+        };
+
+        fetch('http://localhost:5000/user', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                reset();
+            })
     };
 
     // Navigate user
