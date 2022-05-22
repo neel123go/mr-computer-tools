@@ -2,19 +2,21 @@ import React, { useEffect } from 'react';
 import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import auth from '../../../Firebase.init';
+import useToken from '../../../hooks/useToken';
 import SocialLoading from '../Shared/SocialLoading';
 
 const SocialLogin = () => {
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
     let errorMessage;
     const navigate = useNavigate();
+    const [token] = useToken(user);
 
     // Navigate user
     useEffect(() => {
-        if (user) {
+        if (token) {
             navigate('/home');
         }
-    }, [user, navigate]);
+    }, [token, navigate]);
 
     // Handle loading
     if (loading) {

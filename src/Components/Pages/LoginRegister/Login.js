@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../../Firebase.init';
 import SocialLogin from './SocialLogin';
 import Loading from '../Shared/Loading';
+import useToken from '../../../hooks/useToken';
 
 const Login = () => {
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
@@ -16,12 +17,14 @@ const Login = () => {
     ] = useSignInWithEmailAndPassword(auth);
     let errorMessage;
     const navigate = useNavigate();
+    const [token] = useToken(user);
 
+    // Navigate user
     useEffect(() => {
-        if (user) {
-            navigate('/home')
+        if (token) {
+            navigate('/home');
         }
-    }, [user, navigate]);
+    }, [token, navigate]);
 
     const onSubmit = async (data) => {
         await signInWithEmailAndPassword(data.email, data.password);
