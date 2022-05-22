@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
-import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import auth from '../../../Firebase.init';
 import SocialLogin from './SocialLogin';
 import Loading from '../Shared/Loading';
 import useToken from '../../../hooks/useToken';
 
 const Signup = () => {
-    const { register, formState: { errors }, handleSubmit, reset } = useForm();
+    const { register, formState: { errors }, handleSubmit } = useForm();
     let errorMessage;
     const [
         createUserWithEmailAndPassword,
@@ -16,29 +16,42 @@ const Signup = () => {
         loading,
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
-    const [updateProfile, updating, profileUpdateError] = useUpdateProfile(auth);
     const [token] = useToken(user);
     const navigate = useNavigate();
-
-    const onSubmit = async (data) => {
-        await createUserWithEmailAndPassword(data.email, data.password);
-        await updateProfile({ displayName: data.userName });
-    };
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     // Navigate user
     useEffect(() => {
         if (token) {
-            navigate('/home');
+            navigate(from, { replace: true });
         }
-    }, [token, navigate]);
+    }, [token, navigate, from]);
+
+    const onSubmit = async (data) => {
+        await createUserWithEmailAndPassword(data?.email, data?.password);
+        const userName = data?.userName;
+        const email = data?.email;
+        fetch(`http://localhost:5000/userName/${email}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({ userName })
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+            })
+    };
 
     // Handle error
-    if (error || profileUpdateError) {
-        errorMessage = <p className='text-error text-center'>{error?.message || profileUpdateError?.message}</p>
+    if (error) {
+        errorMessage = <p className='text-error text-center'>{error?.message}</p>
     }
 
     // Handle loading
-    if (loading || updating) {
+    if (loading) {
         return <Loading></Loading>;
     }
 
@@ -102,7 +115,7 @@ const Signup = () => {
                                 <span className="label-text text-lg">Password</span>
                             </label>
                             <input
-                                type="text"
+                                type="password"
                                 placeholder="Password"
                                 {...register("password", {
                                     required: {

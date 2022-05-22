@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../../Firebase.init';
 import SocialLogin from './SocialLogin';
 import Loading from '../Shared/Loading';
 import useToken from '../../../hooks/useToken';
 
 const Login = () => {
-    const { register, formState: { errors }, handleSubmit, reset } = useForm();
+    const { register, formState: { errors }, handleSubmit } = useForm();
     const [
         signInWithEmailAndPassword,
         user,
@@ -18,17 +18,18 @@ const Login = () => {
     let errorMessage;
     const navigate = useNavigate();
     const [token] = useToken(user);
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     // Navigate user
     useEffect(() => {
         if (token) {
-            navigate('/home');
+            navigate(from, { replace: true });
         }
-    }, [token, navigate]);
+    }, [token, navigate, from]);
 
     const onSubmit = async (data) => {
         await signInWithEmailAndPassword(data.email, data.password);
-        reset();
     };
 
     if (error) {
@@ -78,7 +79,7 @@ const Login = () => {
                                     <span className="label-text text-lg">Password</span>
                                 </label>
                                 <input
-                                    type="text"
+                                    type="password"
                                     placeholder="Password"
                                     {...register("password", {
                                         required: {
