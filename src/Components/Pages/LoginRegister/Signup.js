@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../../Firebase.init';
 import SocialLogin from './SocialLogin';
@@ -16,6 +16,7 @@ const Signup = () => {
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
     const [updateProfile, updating, profileUpdateError] = useUpdateProfile(auth);
+    const navigate = useNavigate();
 
     const onSubmit = async (data) => {
         await createUserWithEmailAndPassword(data.email, data.password);
@@ -23,14 +24,19 @@ const Signup = () => {
         reset();
     };
 
-    if (user) {
-        console.log(user);
-    }
+    // Navigate user
+    useEffect(() => {
+        if (user) {
+            navigate('/home');
+        }
+    }, [user, navigate]);
 
+    // Handle error
     if (error || profileUpdateError) {
         errorMessage = <p className='text-error text-center'>{error?.message || profileUpdateError?.message}</p>
     }
 
+    // Handle loading
     if (loading || updating) {
         return <Loading></Loading>;
     }
@@ -40,8 +46,6 @@ const Signup = () => {
             <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
                 <div className="card-body">
                     <h2 className='text-2xl font-bold text-center mb-2 text-warning'>Create an account</h2>
-
-
                     <form onSubmit={handleSubmit(onSubmit)}>
                         {errorMessage}
                         <div className="form-control">
@@ -68,9 +72,6 @@ const Signup = () => {
                                 {errors.userName?.type === 'minLength' && <span className="label-text-alt text-error" style={{ fontSize: '15px' }}>{errors.userName.message}</span>}
                             </label>
                         </div>
-
-
-
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text text-lg">Email</span>
@@ -95,8 +96,6 @@ const Signup = () => {
                                 {errors.email?.type === 'pattern' && <span className="label-text-alt text-error" style={{ fontSize: '15px' }}>{errors.email.message}</span>}
                             </label>
                         </div>
-
-
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text text-lg">Password</span>
@@ -128,8 +127,6 @@ const Signup = () => {
                     </form>
                     <SocialLogin></SocialLogin>
                     <p className='text-center mt-3'>Already have an account? <Link to='/login' className='text-info link link-hover'>Login</Link></p>
-
-
                 </div>
             </div>
         </div>

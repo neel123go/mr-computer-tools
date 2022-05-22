@@ -1,14 +1,40 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import auth from '../../../Firebase.init';
 import SocialLogin from './SocialLogin';
+import Loading from '../Shared/Loading';
 
 const Login = () => {
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
-    const onSubmit = data => {
-        console.log(data)
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useSignInWithEmailAndPassword(auth);
+    let errorMessage;
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (user) {
+            navigate('/home')
+        }
+    }, [user, navigate]);
+
+    const onSubmit = async (data) => {
+        await signInWithEmailAndPassword(data.email, data.password);
         reset();
     };
+
+    if (error) {
+        errorMessage = <p className='text-red-500 text-center'>{error?.message}</p>
+    }
+
+    if (loading) {
+        return <Loading></Loading>;
+    }
 
     return (
         <div>
@@ -16,6 +42,7 @@ const Login = () => {
                 <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
                     <div className="card-body">
                         <h2 className='text-2xl font-bold text-center mb-2 text-warning'>Please Login</h2>
+                        {errorMessage}
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="form-control">
                                 <label className="label">
