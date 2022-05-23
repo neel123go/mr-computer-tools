@@ -1,9 +1,11 @@
+import { signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 import auth from '../../../Firebase.init';
+import Loading from '../Shared/Loading';
 
 const Purchase = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -14,11 +16,24 @@ const Purchase = () => {
     const [user] = useAuthState(auth);
     const [currentUser, setCurrentUser] = useState({});
     const [btnDisable, setBtnDisable] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/tools/${toolId}`)
-            .then(res => res.json())
+        setLoading(true);
+        fetch(`http://localhost:5000/tools/${toolId}`, {
+            headers: {
+                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => {
+                if (res.status === 401 || res.status === 403) {
+                    signOut(auth);
+                    localStorage.removeItem('accessToken');
+                }
+                return res.json()
+            })
             .then(data => setTool(data));
+        setLoading(false);
     }, [toolId]);
 
     useEffect(() => {
@@ -31,6 +46,10 @@ const Purchase = () => {
                 });
         }
     }, [user]);
+
+    if (loading) {
+        return <Loading></Loading>;
+    }
 
     const onSubmit = (data) => {
         if (qty < tool.minQty) {
@@ -61,18 +80,24 @@ const Purchase = () => {
                             productImage: tool.image,
                             price: tool.price,
                             description: tool.description,
-                            minQty: tool.minQty,
-                            availableQty: tool.availableQty
+                            quantity: (qty ? qty : tool.minQty)
                         };
 
                         fetch('http://localhost:5000/order', {
                             method: 'POST',
                             headers: {
-                                'content-type': 'application/json'
+                                'content-type': 'application/json',
+                                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
                             },
                             body: JSON.stringify(order)
                         })
-                            .then(res => res.json())
+                            .then(res => {
+                                if (res.status === 401 || res.status === 403) {
+                                    signOut(auth);
+                                    localStorage.removeItem('accessToken');
+                                }
+                                return res.json()
+                            })
                             .then(data => {
                                 // console.log(data);
                             })
