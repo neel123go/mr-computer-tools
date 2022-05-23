@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import MenuItems from './MenuItems';
 import { MenuAlt3Icon } from '@heroicons/react/solid';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../../Firebase.init';
 import { signOut } from 'firebase/auth';
-// // import Loading from './Loading';
-// import { useQuery } from 'react-query';
 
 const Header = () => {
     const [user] = useAuthState(auth);
@@ -14,12 +12,7 @@ const Header = () => {
 
     if (user) {
         const userEmail = user?.email;
-        fetch(`http://localhost:5000/user/${userEmail}`, {
-            method: 'GET',
-            headers: {
-                'content-type': 'application/json'
-            },
-        })
+        fetch(`http://localhost:5000/user/${userEmail}`)
             .then(res => res.json())
             .then(data => {
                 setName(data?.userName);
@@ -46,11 +39,10 @@ const Header = () => {
 
                 <ul className='hidden md:flex gap-6 items-center'>
                     <li><NavLink className='focus:text-indigo-500 uppercase text-gray-800 px-4 rounded-lg py-2' to='/'>home</NavLink></li>
-                    <li><NavLink className='focus:text-indigo-500 uppercase text-gray-800 px-4 rounded-lg py-2' to='/purchase'>Purchase</NavLink></li>
                     {user ? <li className='transition ease-linear uppercase duration-300 hover:rounded-lg border-b-4 border-primary hover:bg-primary cursor-pointer focus:text-indigo-500 text-gray-800 px-4 py-2' onClick={handleLogout}>Logout</li> : <div>
                         <li><NavLink className='bg-primary text-gray-800 px-4 rounded-lg py-2' to='/login'>Login</NavLink></li>
                     </div>}
-                    {user && <li><p className='bg-primary text-gray-800 px-4 rounded-lg py-2'>{name}</p></li>}
+                    {user && <li><p className='bg-primary text-gray-800 px-4 rounded-lg py-2'>{name || user.displayName}</p></li>}
                 </ul>
 
                 <MenuItems setActive={setActive} active={active} user={user} name={name} handleLogout={handleLogout} />

@@ -41,7 +41,7 @@ const Signup = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
             })
     };
 
