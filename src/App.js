@@ -7,6 +7,10 @@ import Header from './Components/Pages/Shared/Header';
 import Purchase from './Components/Pages/Purchase/Purchase';
 import RequireAuth from './Components/Pages/LoginRegister/RequireAuth';
 import { Toaster } from 'react-hot-toast';
+import Dashboard from './Components/Pages/Dashboard/Dashboard';
+import MyOrders from './Components/Pages/Dashboard/MyOrders';
+import AddReview from './Components/Pages/Dashboard/AddReview';
+import MyProfile from './Components/Pages/Dashboard/MyProfile';
 
 function App() {
   return (
@@ -22,6 +26,15 @@ function App() {
             <Purchase></Purchase>
           </RequireAuth>
         }></Route>
+        <Route path="/dashboard" element={
+          <RequireAuth>
+            <Dashboard></Dashboard>
+          </RequireAuth>
+        }>
+          <Route index element={<MyOrders></MyOrders>}></Route>
+          <Route path="addReview" element={<AddReview></AddReview>}></Route>
+          <Route path="myProfile" element={<MyProfile></MyProfile>}></Route>
+        </Route>
       </Routes>
       <Footer></Footer>
       <Toaster

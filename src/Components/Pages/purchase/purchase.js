@@ -13,6 +13,7 @@ const Purchase = () => {
     const [qty, setQty] = useState();
     const [user] = useAuthState(auth);
     const [currentUser, setCurrentUser] = useState({});
+    const [btnDisable, setBtnDisable] = useState(false);
 
     useEffect(() => {
         fetch(`http://localhost:5000/tools/${toolId}`)
@@ -31,42 +32,65 @@ const Purchase = () => {
         }
     }, [user]);
 
-    const onSubmit = async (data) => {
-        const address = data.address;
-        const phone = data.phone;
-        const userEmail = user.email;
-        console.log(address, phone);
-        fetch(`http://localhost:5000/user/${userEmail}`, {
-            method: 'PUT',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({ address, phone })
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data.result);
+    const onSubmit = (data) => {
+        if (qty < tool.minQty) {
+            toast.error(`You have to purchase at least ${tool.minQty} products`);
+            setBtnDisable(true);
+        } else if (qty > tool.availableQty) {
+            toast.error(`You can't purchase more than ${tool.availableQty} products`);
+            setBtnDisable(true);
+        } else {
+            setBtnDisable(false);
+            const address = data.address;
+            const phone = data.phone;
+            const userEmail = user.email;
+            fetch(`http://localhost:5000/user/${userEmail}`, {
+                method: 'PUT',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({ address, phone })
             })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.result.acknowledged === true) {
+                        const order = {
+                            name: currentUser.userName,
+                            email: currentUser.email,
+                            productName: tool.name,
+                            productImage: tool.image,
+                            price: tool.price,
+                            description: tool.description,
+                            minQty: tool.minQty,
+                            availableQty: tool.availableQty
+                        };
+
+                        fetch('http://localhost:5000/order', {
+                            method: 'POST',
+                            headers: {
+                                'content-type': 'application/json'
+                            },
+                            body: JSON.stringify(order)
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                // console.log(data);
+                            })
+                    }
+                });
+        }
     };
 
     const increaseQty = (quantity) => {
         const newQuantity = parseInt(quantity) + 1;
         setQty(newQuantity);
         document.getElementById('number').value = newQuantity;
-        if (newQuantity > tool.availableQty) {
-            document.getElementById('number').value = newQuantity;
-            toast.error(`You cannot order more than ${tool.availableQty} quantity`);
-        }
     }
 
     const decreaseQty = (quantity) => {
         const newQuantity = parseInt(quantity) - 1;
         setQty(newQuantity);
         document.getElementById('number').value = newQuantity;
-        if (newQuantity < tool.minQty) {
-            document.getElementById('number').value = newQuantity;
-            toast.error(`You cannot order less than ${tool.minQty} quantity`);
-        }
     }
 
     return (
@@ -92,8 +116,8 @@ const Purchase = () => {
                         </div>
                     </div>
                 </div>
-                <h2 className='mt-10 text-3xl'>User Information</h2>
 
+                <h2 className='mt-10 text-3xl'>User Information</h2>
                 <div className="hero py-10">
                     <div className="card flex-shrink-0 w-full max-w-md shadow-2xl bg-base-100">
                         <div className="card-body">
@@ -109,8 +133,6 @@ const Purchase = () => {
                                         readOnly disabled
                                         className="input input-bordered focus:border-2 focus:border-indigo-300 focus:outline-0" />
                                 </div>
-
-
                                 <div className="form-control">
                                     <label className="label">
                                         <span className="label-text text-lg">Email</span>
@@ -121,9 +143,6 @@ const Purchase = () => {
                                         readOnly disabled
                                         className="input input-bordered focus:border-2 focus:border-indigo-300 focus:outline-0" />
                                 </div>
-
-
-
                                 <div className="form-control">
                                     <label className="label">
                                         <span className="label-text text-lg">Address</span>
@@ -141,12 +160,9 @@ const Purchase = () => {
                                         defaultValue={currentUser?.address && currentUser?.address}
                                         className="input input-bordered focus:border-2 focus:border-indigo-300 focus:outline-0" />
                                     <label className="mt-1">
-                                        {errors.address?.type === 'required' && <span className="label-text-alt text-error" style={{ fontSize: '15px' }}>{errors.address.message}</span>}
+                                        {currentUser?.address ? '' : (errors.address?.type === 'required' && <span className="label-text-alt text-error" style={{ fontSize: '15px' }}>{errors.address.message}</span>)}
                                     </label>
                                 </div>
-
-
-
                                 <div className="form-control">
                                     <label className="label">
                                         <span className="label-text text-lg">Phone Number</span>
@@ -164,12 +180,12 @@ const Purchase = () => {
                                         defaultValue={currentUser?.phone && currentUser?.phone}
                                         className="input input-bordered focus:border-2 focus:border-indigo-300 focus:outline-0" />
                                     <label className="mt-1">
-                                        {errors.phone?.type === 'required' && <span className="label-text-alt text-error" style={{ fontSize: '15px' }}>{errors.phone.message}</span>}
+                                        {currentUser?.phone ? '' : errors.phone?.type === 'required' && <span className="label-text-alt text-error" style={{ fontSize: '15px' }}>{errors.phone.message}</span>}
                                     </label>
                                 </div>
 
                                 <div className="form-control mt-6">
-                                    <button disabled={qty < tool.minQty || qty > tool.availableQty} className="btn btn-primary">place order</button>
+                                    <button disabled={btnDisable === true && (qty < tool.minQty || qty > tool.availableQty)} className="btn btn-primary">place order</button>
                                 </div>
                             </form>
                         </div>

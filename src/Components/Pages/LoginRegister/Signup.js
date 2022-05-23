@@ -32,17 +32,19 @@ const Signup = () => {
         await createUserWithEmailAndPassword(data?.email, data?.password);
         const userName = data?.userName;
         const email = data?.email;
-        fetch(`http://localhost:5000/userName/${email}`, {
-            method: 'PUT',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({ userName })
-        })
-            .then(res => res.json())
-            .then(data => {
-                // console.log(data);
+        if (email && userName) {
+            fetch(`http://localhost:5000/userName/${email}`, {
+                method: 'PUT',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({ userName })
             })
+                .then(res => res.json())
+                .then(data => {
+                    // console.log(data);
+                })
+        }
     };
 
     // Handle error
@@ -76,7 +78,7 @@ const Signup = () => {
                                     },
                                     minLength: {
                                         value: 3,
-                                        message: 'User name must be contain at least 8 characters'
+                                        message: 'User name must be contain at least 3 characters'
                                     }
                                 })}
                                 autoComplete='off'
@@ -124,7 +126,7 @@ const Signup = () => {
                                     },
                                     minLength: {
                                         value: 8,
-                                        message: 'Password must be contain at least 3 characters'
+                                        message: 'Password must be contain at least 8 characters'
                                     }
                                 })}
                                 autoComplete='off'
