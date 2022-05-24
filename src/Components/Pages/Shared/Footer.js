@@ -9,18 +9,18 @@ const Footer = () => {
         <div className='border-t-2 border-gray-300'>
             <footer className="footer px-8 lg:px-32 p-10 bg-base-300 text-base-content">
                 <div>
-                    <span className="footer-title">Company</span>
+                    <span className="text-lg font-semibold">Company</span>
                     <p className='text-xl'>Mr Computer Tools</p>
                 </div>
                 <div>
-                    <span className="footer-title">Services</span>
+                    <span className='text-lg font-semibold'>Services</span>
                     <Link to='/' className="link link-hover">Branding</Link>
                     <Link to='/' className="link link-hover">Design</Link>
                     <Link to='/' className="link link-hover">Marketing</Link>
                     <Link to='/' className="link link-hover">Advertisement</Link>
                 </div>
                 <div>
-                    <span className="footer-title">Legal</span>
+                    <span className="text-lg font-semibold">Legal</span>
                     <Link to='/' className="link link-hover">About us</Link>
                     <Link to='/' className="link link-hover">Contact</Link>
                     <Link to='/' className="link link-hover">Jobs</Link>

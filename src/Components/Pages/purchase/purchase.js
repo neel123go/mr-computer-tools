@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import auth from '../../../Firebase.init';
 import Loading from '../Shared/Loading';
 
@@ -17,21 +17,13 @@ const Purchase = () => {
     const [currentUser, setCurrentUser] = useState({});
     const [btnDisable, setBtnDisable] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [dashboardNavigate, setDashboardNavigate] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         setLoading(true);
-        fetch(`http://localhost:5000/tools/${toolId}`, {
-            headers: {
-                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
-            }
-        })
-            .then(res => {
-                if (res.status === 401 || res.status === 403) {
-                    signOut(auth);
-                    localStorage.removeItem('accessToken');
-                }
-                return res.json()
-            })
+        fetch(`http://localhost:5000/tools/${toolId}`)
+            .then(res => res.json())
             .then(data => setTool(data));
         setLoading(false);
     }, [toolId]);
@@ -46,6 +38,12 @@ const Purchase = () => {
                 });
         }
     }, [user]);
+
+    useEffect(() => {
+        if (dashboardNavigate) {
+            navigate('/dashboard');
+        }
+    }, [dashboardNavigate, navigate]);
 
     if (loading) {
         return <Loading></Loading>;
@@ -99,7 +97,9 @@ const Purchase = () => {
                                 return res.json()
                             })
                             .then(data => {
-                                // console.log(data);
+                                if (data?.insertedId) {
+                                    setDashboardNavigate(true);
+                                }
                             })
                     }
                 });

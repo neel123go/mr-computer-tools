@@ -26,8 +26,7 @@ const SocialLogin = () => {
         fetch(`http://localhost:5000/userName/${email}`, {
             method: 'PUT',
             headers: {
-                'content-type': 'application/json',
-                authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                'content-type': 'application/json'
             },
             body: JSON.stringify({ userName })
         })
