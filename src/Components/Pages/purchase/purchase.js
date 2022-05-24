@@ -9,7 +9,6 @@ import Loading from '../Shared/Loading';
 
 const Purchase = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
-    let errorMessage;
     const { toolId } = useParams();
     const [tool, setTool] = useState({});
     const [qty, setQty] = useState();
@@ -146,7 +145,6 @@ const Purchase = () => {
                 <div className="hero py-10">
                     <div className="card flex-shrink-0 w-full max-w-md shadow-2xl bg-base-100">
                         <div className="card-body">
-                            {errorMessage}
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <div className="form-control">
                                     <label className="label">

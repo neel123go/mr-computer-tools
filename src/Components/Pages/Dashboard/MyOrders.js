@@ -55,7 +55,7 @@ const MyOrders = () => {
                             <td className='p-0 py-1 text-center'>{order.price}</td>
                             <td className='p-0 py-1 text-center'>{order.quantity}</td>
                             <td className='p-0 py-1 text-center'>
-                                <label onClick={() => setCancelOrder(order)} htmlFor="delete-modal" className="btn-tiny modal-button px-3 py-1 rounded-lg btn-error">Cancel</label><button className='btn-tiny ml-3 w-16 py-1 rounded-lg btn-primary'>Paid</button></td>
+                                <label onClick={() => setCancelOrder(order)} htmlFor="delete-modal" className="btn-tiny modal-button px-3 py-1 rounded-lg btn-error">Cancel</label><button className='btn-tiny ml-3 w-16 py-1 rounded-lg btn-primary'>Payment</button></td>
                         </tr>))}
                     </tbody>
                 </table> : <p className='text-center text-lg sm:text-3xl py-5'>You haven't ordered anything yet</p>}

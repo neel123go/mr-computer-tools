@@ -7,7 +7,6 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 
 const AddReview = () => {
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
-    let errorMessage;
     const [rating, setRating] = useState(1);
     const [user] = useAuthState(auth);
     const [dbUser, setDbUser] = useState({});
@@ -57,7 +56,6 @@ const AddReview = () => {
             <div className="hero my-20">
                 <div className="card flex-shrink-0 w-full max-w-md shadow-2xl bg-base-100">
                     <div className="card-body">
-                        {errorMessage}
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="form-control">
                                 <label className="label">
