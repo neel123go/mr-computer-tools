@@ -35,7 +35,7 @@ const CancelOrderModal = ({ cancelOrder, refetch }) => {
             <div className="modal">
                 <div className="modal-box">
                     <label htmlFor="delete-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-                    <p className="py-4 text-indigo-500 text-2xl pr-5">{productName}</p>
+                    <p className="py-4 text-indigo-500 text-lg md:text-2xl pr-5">{productName}</p>
                     <h3 className="font-bold text-lg text-error">Are You sure to cancel this order</h3>
                     <div className="modal-action">
                         <label onClick={() => handleCancelOrder(_id)} htmlFor="delete-modal" className="btn btn-sm">Sure</label>

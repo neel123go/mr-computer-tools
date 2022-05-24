@@ -119,21 +119,21 @@ const Purchase = () => {
     }
 
     return (
-        <div className='px-32 py-20'>
-            <div className='p-10 bg-indigo-100 shadow-xl'>
-                <h2 className='text-3xl'>Product Details</h2>
-                <div className="card lg:card-side">
-                    <figure className='mt-5'><img src={tool.image} alt="Album" className='rounded-lg w-[350px]' /></figure>
-                    <div className="card-body">
+        <div className='px-4 sm:px-10 lg:px-16 xl:px-32 py-8 md:py-20 bg-gray-100'>
+            <div className='p-3 md:p-10 bg-indigo-100 shadow-xl'>
+                <h2 className='py-3 text-3xl'>Product Details</h2>
+                <div className="card lg:card-side lg:mt-5">
+                    <figure className='mt-5 lg:mt-0'><img src={tool.image} alt="Album" className='rounded-lg w-[350px]' /></figure>
+                    <div className="card-body p-0 sm:p-5 pt-4 lg:pt-0">
                         <h2 className="card-title">{tool.name}</h2>
                         <p className='my-5'>{tool.description}</p>
-                        <div className='flex justify-between items-center'>
+                        <div className='block md:flex justify-between items-center'>
                             <div>
                                 <p className='text-xl'>Price: ${tool.price} <span className="badge badge-base-100 py-3 px-3">Per One</span></p>
                                 <p className='text-xl py-2'>Minimum Quantity: {tool.minQty}</p>
                                 <p className='text-xl'>Available Quantity: {tool.availableQty}</p>
                             </div>
-                            <div className='flex justify-center items-center'>
+                            <div className='flex justify-start mt-5 md:justify-center items-center'>
                                 <button onClick={() => decreaseQty(qty ? qty : tool.minQty)} disabled={qty === 1} className='btn btn-primary w-12 h-10 mr-[-5px]'>-</button>
                                 <input type="number" className='pl-3 outline-none text-xl text-center w-20 h-12 z-10' name="quantity" defaultValue={qty ? qty : tool.minQty} id="number" readOnly />
                                 <button onClick={() => increaseQty(qty ? qty : tool.minQty)} className='btn btn-primary w-12 h-10 ml-[-5px]'>+</button>
