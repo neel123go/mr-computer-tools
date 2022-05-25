@@ -40,7 +40,7 @@ const Purchase = () => {
 
     useEffect(() => {
         if (dashboardNavigate) {
-            navigate('/dashboard');
+            navigate('/dashboard/myOrder');
         }
     }, [dashboardNavigate, navigate]);
 
