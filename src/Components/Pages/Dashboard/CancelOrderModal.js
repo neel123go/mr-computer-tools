@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import auth from '../../../Firebase.init';
 
 const CancelOrderModal = ({ cancelOrder, refetch }) => {
-    const { _id, productName, productImage, price, quantity } = cancelOrder;
+    const { _id, productName } = cancelOrder;
 
     const handleCancelOrder = (id) => {
         fetch(`http://localhost:5000/order/${_id}`, {

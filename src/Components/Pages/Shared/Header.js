@@ -8,7 +8,7 @@ import { signOut } from 'firebase/auth';
 
 const Header = () => {
     const [user] = useAuthState(auth);
-    const [name, setName] = useState('');
+    const [name, setName] = useState(null);
     const [active, setActive] = useState(false);
     const { pathname } = useLocation();
 
