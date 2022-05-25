@@ -17,6 +17,7 @@ import AddProduct from './Components/Pages/Dashboard/AddProduct';
 import ManageProducts from './Components/Pages/Dashboard/ManageProducts';
 import RequireAdmin from './Components/Pages/LoginRegister/RequireAdmin';
 import RequireNormalUser from './Components/Pages/LoginRegister/RequireNormalUser';
+import Payment from './Components/Pages/Dashboard/Payment';
 
 function App() {
   return (
@@ -38,6 +39,11 @@ function App() {
           </RequireAuth>
         }>
           <Route index element={<MyProfile></MyProfile>}></Route>
+          <Route path='payment/:id' element={
+            <RequireAuth>
+              <Payment></Payment>
+            </RequireAuth>
+          }></Route>
           <Route path='myOrder' element={
             <RequireNormalUser>
               <MyOrders></MyOrders>

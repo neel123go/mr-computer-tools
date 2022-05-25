@@ -2,6 +2,7 @@ import { signOut } from 'firebase/auth';
 import React, { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useQuery } from 'react-query';
+import { Link } from 'react-router-dom';
 import auth from '../../../Firebase.init';
 import Loading from '../Shared/Loading';
 import CancelOrderModal from './CancelOrderModal';
@@ -9,9 +10,10 @@ import CancelOrderModal from './CancelOrderModal';
 const MyOrders = () => {
     const [user] = useAuthState(auth);
 
-    const { data: orders, isLoading, refetch } = useQuery('order', () => fetch(`http://localhost:5000/order/${user.email}`, {
+    const { data: orders, isLoading, refetch } = useQuery('orders', () => fetch(`http://localhost:5000/order/${user?.email}`, {
         method: 'GET',
         headers: {
+            'content-type': 'application/json',
             'authorization': `Bearer ${localStorage.getItem('accessToken')}`
         }
     }).then(res => {
@@ -32,7 +34,7 @@ const MyOrders = () => {
         <div>
             <h2 className='text-2xl'>My Orders</h2>
             <div className="overflow-x-auto mt-8">
-                {orders.length > 0 ? <table className="table w-full">
+                {orders?.length > 0 ? <table className="table w-full">
                     <thead>
                         <tr>
                             <th className='text-center'>No</th>
@@ -55,7 +57,9 @@ const MyOrders = () => {
                             <td className='p-0 py-1 text-center'>{order.price}</td>
                             <td className='p-0 py-1 text-center'>{order.quantity}</td>
                             <td className='p-0 py-1 text-center'>
-                                <label onClick={() => setCancelOrder(order)} htmlFor="delete-modal" className="btn-tiny modal-button px-3 py-2 rounded-lg btn-error">Cancel</label><button className='btn-tiny mx-3 px-2 h-8 rounded-lg btn-primary'>Payment</button></td>
+                                {(order.price && !order?.paid) && <label onClick={() => setCancelOrder(order)} htmlFor="delete-modal" className="btn-tiny modal-button px-3 py-2 rounded-lg btn-error">Cancel</label>}
+                                {(order.price && order?.paid) ? <span className='bg-green-300 px-4 py-2 rounded-lg'>Paid</span> : <Link to={`/dashboard/payment/${order._id}`}><button className='btn-tiny mx-3 px-5 h-8 rounded-lg btn-primary'>Pay</button></Link>}
+                            </td>
                         </tr>))}
                     </tbody>
                 </table> : <p className='text-center text-lg sm:text-3xl py-5'>You haven't ordered anything yet</p>}
