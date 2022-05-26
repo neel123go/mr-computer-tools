@@ -1,11 +1,14 @@
 import { signOut } from 'firebase/auth';
-import React from 'react';
+import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useQuery } from 'react-query';
 import auth from '../../../Firebase.init';
 import Loading from '../Shared/Loading';
+import CancelOrderModal from './CancelOrderModal';
 
 const ManageOrders = () => {
+    const [cancelOrder, setCancelOrder] = useState(null);
+
     const { data: orders, isLoading, refetch } = useQuery('orders', () => fetch('http://localhost:5000/orders', {
         method: 'GET',
         headers: {
@@ -23,9 +26,10 @@ const ManageOrders = () => {
         return <Loading></Loading>;
     };
 
-    const handleStatus = (id) => {
+    const handleStatus = (id, transactionId) => {
         const payment = {
             status: 'shipped',
+            transactionId: transactionId
         };
 
         fetch(`http://localhost:5000/order/${id}`, {
@@ -81,14 +85,15 @@ const ManageOrders = () => {
                             <td className='p-0 py-1 text-center'>{order?.quantity}</td>
                             <td className='p-0 py-1 text-center'>
                                 {(order.price && !order?.paid) && <>
-                                    <label htmlFor="delete-modal" className="btn-tiny modal-button px-3 py-2 rounded-lg btn-error">Cancel</label>
+                                    <label onClick={() => setCancelOrder(order)} htmlFor="delete-modal" className="btn-tiny modal-button px-3 py-2 rounded-lg btn-error">Cancel</label>
                                     <label htmlFor="delete-modal" className="ml-2 btn-tiny modal-button px-3 py-2 rounded-lg btn-error">Unpaid</label>
                                 </>}
-                                {order?.paid && <button onClick={() => handleStatus(order?._id)} className={`px-4 py-2 rounded-lg ${order?.status === 'pending' ? "bg-indigo-300" : "bg-green-300"}`}>{order.status}</button>}
+                                {order?.paid && <button onClick={() => handleStatus(order?._id, order?.transactionId)} className={`px-4 py-2 rounded-lg ${order?.status === 'pending' ? "bg-indigo-300" : "bg-green-300"}`}>{order.status}</button>}
                             </td>
                         </tr>))}
                     </tbody>
                 </table> : <p className='text-center text-lg sm:text-3xl py-5'>You do not have any users yet</p>}
+                {cancelOrder && <CancelOrderModal refetch={refetch} cancelOrder={cancelOrder}></CancelOrderModal>}
             </div>
         </div>
     );
