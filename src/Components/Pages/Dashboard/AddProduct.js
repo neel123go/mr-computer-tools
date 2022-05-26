@@ -1,6 +1,8 @@
+import { signOut } from 'firebase/auth';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import auth from '../../../Firebase.init';
 import Loading from '../Shared/Loading';
 
 const AddProduct = () => {
@@ -39,7 +41,13 @@ const AddProduct = () => {
                         },
                         body: JSON.stringify(tool)
                     })
-                        .then(res => res.json())
+                        .then(res => {
+                            if (res.status === 401 || res.status === 403) {
+                                signOut(auth);
+                                localStorage.removeItem('accessToken');
+                            }
+                            return res.json()
+                        })
                         .then(toolInserted => {
                             if (toolInserted.insertedId) {
                                 toast.success('Product added successfully');

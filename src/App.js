@@ -21,6 +21,7 @@ import Payment from './Components/Pages/Dashboard/Payment';
 import NotFound from './Components/Pages/Shared/NotFound';
 import Blogs from './Components/Pages/Blogs/Blogs';
 import MyPortfolio from './Components/Pages/MyPortfolio/MyPortfolio';
+import AddBlogs from './Components/Pages/Dashboard/AddBlogs';
 
 function App() {
   return (
@@ -75,6 +76,11 @@ function App() {
           <Route path="manageProducts" element={
             <RequireAdmin>
               <ManageProducts></ManageProducts>
+            </RequireAdmin>
+          }></Route>
+          <Route path="addBlogs" element={
+            <RequireAdmin>
+              <AddBlogs></AddBlogs>
             </RequireAdmin>
           }></Route>
         </Route>

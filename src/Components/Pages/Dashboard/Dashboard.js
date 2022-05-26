@@ -29,6 +29,7 @@ const Dashboard = () => {
                         <li><Link to='addProduct' className='mb-5 bg-primary text-lg text-gray-800 hover:bg-error focus:bg-error hover:text-white focus:text-white'>Add A Product</Link></li>
                         <li><Link to='makeAdmin' className='mb-5 bg-primary text-lg text-gray-800 hover:bg-error focus:bg-error hover:text-white focus:text-white'>Make Admin</Link></li>
                         <li><Link to='manageProducts' className='mb-5 bg-primary text-lg text-gray-800 hover:bg-error focus:bg-error hover:text-white focus:text-white'>Manage Products</Link></li>
+                        <li><Link to='addBlogs' className='mb-5 bg-primary text-lg text-gray-800 hover:bg-error focus:bg-error hover:text-white focus:text-white'>Add Blogs</Link></li>
                     </>}
                 </ul>
 

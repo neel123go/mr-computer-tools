@@ -2,10 +2,10 @@ import React from 'react';
 
 const MyPortfolio = () => {
     return (
-        <div className='min-h-screen px-7 bg-slate-300 md:px-20 lg:px-26 bg-base-100 xl:px-32 py-16'>
+        <div className='min-h-screen px-2 bg-slate-300 md:px-20 lg:px-26 xl:px-32 py-16'>
             <h2 className='text-center text-3xl text-gray-700'>My Portfolio</h2>
-            <div class="card w-1/2 mx-auto mt-10 bg-base-200 shadow-xl">
-                <div class="card-body">
+            <div className="card w-full sm:w-4/5 lg:w-1/2 mx-auto mt-10 bg-base-200 shadow-xl">
+                <div className="card-body">
                     <div className='text-left text-xl'>
                         <p className='text-center text-gray-800 text-3xl'>Ayoun Paul Neel</p>
                         <div className='mt-10'>
