@@ -33,7 +33,7 @@ const Signup = () => {
         const userName = data?.userName;
         const email = data?.email;
         if (email && userName) {
-            fetch(`http://localhost:5000/userName/${email}`, {
+            fetch(`https://aqueous-plateau-30085.herokuapp.com/userName/${email}`, {
                 method: 'PUT',
                 headers: {
                     'content-type': 'application/json',

@@ -7,7 +7,7 @@ const CancelOrderModal = ({ cancelOrder, refetch }) => {
     const { _id, productName } = cancelOrder;
 
     const handleCancelOrder = (id) => {
-        fetch(`http://localhost:5000/order/${_id}`, {
+        fetch(`https://aqueous-plateau-30085.herokuapp.com/order/${_id}`, {
             method: 'DELETE',
             headers: {
                 'content-type': 'application/json',

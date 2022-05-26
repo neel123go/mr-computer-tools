@@ -33,7 +33,7 @@ const AddProduct = () => {
                         availableQty: data.availableQty
                     };
 
-                    fetch('http://localhost:5000/tools', {
+                    fetch('https://aqueous-plateau-30085.herokuapp.com/tools', {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json',

@@ -9,7 +9,7 @@ import CancelOrderModal from './CancelOrderModal';
 const ManageOrders = () => {
     const [cancelOrder, setCancelOrder] = useState(null);
 
-    const { data: orders, isLoading, refetch } = useQuery('orders', () => fetch('http://localhost:5000/orders', {
+    const { data: orders, isLoading, refetch } = useQuery('orders', () => fetch('https://aqueous-plateau-30085.herokuapp.com/orders', {
         method: 'GET',
         headers: {
             'authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -32,7 +32,7 @@ const ManageOrders = () => {
             transactionId: transactionId
         };
 
-        fetch(`http://localhost:5000/order/${id}`, {
+        fetch(`https://aqueous-plateau-30085.herokuapp.com/order/${id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',

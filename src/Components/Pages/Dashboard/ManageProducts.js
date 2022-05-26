@@ -8,7 +8,7 @@ import DeleteProductModal from './DeleteProductModal';
 const ManageOrders = () => {
     const [deleteProduct, setDeleteProduct] = useState(null);
 
-    const { data: tools, isLoading, refetch } = useQuery('tools', () => fetch('http://localhost:5000/tools', {
+    const { data: tools, isLoading, refetch } = useQuery('tools', () => fetch('https://aqueous-plateau-30085.herokuapp.com/tools', {
         method: 'GET',
         headers: {
             'authorization': `Bearer ${localStorage.getItem('accessToken')}`

@@ -12,7 +12,7 @@ import ReviewSliderItems from './ReviewSliderItems';
 import { useQuery } from 'react-query';
 
 const ReviewSlider = () => {
-    const { data: reviews, isLoading } = useQuery('review', () => fetch('http://localhost:5000/review', {
+    const { data: reviews, isLoading } = useQuery('review', () => fetch('https://aqueous-plateau-30085.herokuapp.com/review', {
         method: 'GET'
     })
         .then(res => res.json()));

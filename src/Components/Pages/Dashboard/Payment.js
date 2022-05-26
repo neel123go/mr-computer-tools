@@ -11,7 +11,7 @@ const stripePromise = loadStripe('pk_test_51L0k6GABT6F4bUNXZRqu1uksgYfGD6jRTTLQz
 const Payment = () => {
     const { id } = useParams();
 
-    const { data: order, isLoading } = useQuery(['order', id], () => fetch(`http://localhost:5000/orders/${id}`, {
+    const { data: order, isLoading } = useQuery(['order', id], () => fetch(`https://aqueous-plateau-30085.herokuapp.com/orders/${id}`, {
         method: 'GET',
         headers: {
             'content-type': 'application/json',

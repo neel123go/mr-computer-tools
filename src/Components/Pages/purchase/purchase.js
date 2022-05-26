@@ -21,7 +21,7 @@ const Purchase = () => {
 
     useEffect(() => {
         setLoading(true);
-        fetch(`http://localhost:5000/tools/${toolId}`)
+        fetch(`https://aqueous-plateau-30085.herokuapp.com/tools/${toolId}`)
             .then(res => res.json())
             .then(data => setTool(data));
         setLoading(false);
@@ -30,7 +30,7 @@ const Purchase = () => {
     useEffect(() => {
         if (user) {
             const userEmail = user?.email;
-            fetch(`http://localhost:5000/user/${userEmail}`)
+            fetch(`https://aqueous-plateau-30085.herokuapp.com/user/${userEmail}`)
                 .then(res => res.json())
                 .then(data => {
                     setCurrentUser(data);
@@ -60,7 +60,7 @@ const Purchase = () => {
             const address = data.address;
             const phone = data.phone;
             const userEmail = user.email;
-            fetch(`http://localhost:5000/user/${userEmail}`, {
+            fetch(`https://aqueous-plateau-30085.herokuapp.com/user/${userEmail}`, {
                 method: 'PUT',
                 headers: {
                     'content-type': 'application/json'
@@ -81,7 +81,7 @@ const Purchase = () => {
                             quantity: (qty ? qty : tool.minQty)
                         };
 
-                        fetch('http://localhost:5000/order', {
+                        fetch('https://aqueous-plateau-30085.herokuapp.com/order', {
                             method: 'POST',
                             headers: {
                                 'content-type': 'application/json',

@@ -13,7 +13,7 @@ const MyProfile = () => {
 
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:5000/user/${user?.email}`)
+            fetch(`https://aqueous-plateau-30085.herokuapp.com/user/${user?.email}`)
                 .then(res => res.json())
                 .then(data => {
                     setDbUser(data);
@@ -44,7 +44,7 @@ const MyProfile = () => {
                 profileLink: data.profileLink
             };
 
-            fetch(`http://localhost:5000/user/${user?.email}`, {
+            fetch(`https://aqueous-plateau-30085.herokuapp.com/user/${user?.email}`, {
                 method: 'PUT',
                 headers: {
                     'content-type': 'application/json'
@@ -69,7 +69,7 @@ const MyProfile = () => {
                 profileLink: data.profileLink
             };
 
-            fetch(`http://localhost:5000/user/${user?.email}`, {
+            fetch(`https://aqueous-plateau-30085.herokuapp.com/user/${user?.email}`, {
                 method: 'PUT',
                 headers: {
                     'content-type': 'application/json'

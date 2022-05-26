@@ -12,7 +12,7 @@ const AddReview = () => {
     const [dbUser, setDbUser] = useState({});
 
     useEffect(() => {
-        fetch(`http://localhost:5000/user/${user.email}`)
+        fetch(`https://aqueous-plateau-30085.herokuapp.com/user/${user.email}`)
             .then(res => res.json())
             .then(data => {
                 setDbUser(data);
@@ -27,7 +27,7 @@ const AddReview = () => {
             reviewText
         };
 
-        fetch('http://localhost:5000/review', {
+        fetch('https://aqueous-plateau-30085.herokuapp.com/review', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

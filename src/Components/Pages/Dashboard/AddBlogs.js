@@ -13,7 +13,7 @@ const AddBlogs = () => {
             image: data.image,
             description: data.description
         };
-        fetch('http://localhost:5000/blog', {
+        fetch('https://aqueous-plateau-30085.herokuapp.com/blog', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

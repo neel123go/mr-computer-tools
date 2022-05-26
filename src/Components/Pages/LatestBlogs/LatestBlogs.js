@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import Loading from '../Shared/Loading';
 
 const LatestBlogs = () => {
-    const { data: blogs, isLoading } = useQuery('blogs', () => fetch('http://localhost:5000/blog')
+    const { data: blogs, isLoading } = useQuery('blogs', () => fetch('https://aqueous-plateau-30085.herokuapp.com/blog')
         .then(res => res.json()));
 
     if (isLoading) {

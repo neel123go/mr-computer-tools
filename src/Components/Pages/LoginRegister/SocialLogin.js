@@ -23,7 +23,7 @@ const SocialLogin = () => {
     if (user) {
         const userName = user?.user.displayName;
         const email = user?.user.email;
-        fetch(`http://localhost:5000/userName/${email}`, {
+        fetch(`https://aqueous-plateau-30085.herokuapp.com/userName/${email}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

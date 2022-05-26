@@ -10,7 +10,7 @@ import CancelOrderModal from './CancelOrderModal';
 const MyOrders = () => {
     const [user] = useAuthState(auth);
 
-    const { data: orders, isLoading, refetch } = useQuery('orders', () => fetch(`http://localhost:5000/order/${user?.email}`, {
+    const { data: orders, isLoading, refetch } = useQuery('orders', () => fetch(`https://aqueous-plateau-30085.herokuapp.com/order/${user?.email}`, {
         method: 'GET',
         headers: {
             'content-type': 'application/json',
