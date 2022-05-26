@@ -1,5 +1,7 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import { signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
+import auth from '../../../Firebase.init';
 
 const CheckoutForm = ({ totalPrice, order }) => {
     const stripe = useStripe();
@@ -87,7 +89,13 @@ const CheckoutForm = ({ totalPrice, order }) => {
                 },
                 body: JSON.stringify(payment)
             })
-                .then(res => res.json())
+                .then(res => {
+                    if (res.status === 401 || res.status === 403) {
+                        signOut(auth);
+                        localStorage.removeItem('accessToken');
+                    }
+                    return res.json()
+                })
                 .then(data => {
                     setLoading(false);
                 })
@@ -99,7 +107,6 @@ const CheckoutForm = ({ totalPrice, order }) => {
             {cardError && <p className='text-error text-lg my-2'>{cardError}</p>}
             {success && <div>
                 <p className='text-green-600 text-lg my-2'>{success}</p>
-                <p className='text-gray-600 text-lg my-2'>Your transaction id: <span className='text-indigo-500'>{transactionId}</span></p>
             </div>}
             <form onSubmit={handleSubmit}>
                 <CardElement

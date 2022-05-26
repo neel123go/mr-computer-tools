@@ -31,7 +31,9 @@ const Payment = () => {
                 <div className="w-1/2 text-center lg:text-left">
                     <h1 className="text-xl font-bold text-emerald-600 mb-5">Hello {order?.name},</h1>
                     <h1 className="text-4xl font-bold">Pay Your Order now!</h1>
-                    <p className='text-gray-600 mt-7 text-lg'>Product Name: <span className='text-orange-700'>{order?.productName}</span></p>
+                    <p className='text-gray-600 mt-7 text-lg'>Email: <span className='text-orange-700'>{order?.email}</span></p>
+                    <p className='text-gray-600 text-lg'>Address: <span className='text-orange-700'>{order?.address}</span></p>
+                    <p className='text-gray-600 text-lg'>Product Name: <span className='text-orange-700'>{order?.productName}</span></p>
                     <p className='text-gray-600 text-lg'>Product Quantity: <span className='text-orange-700'>{order?.quantity}</span></p>
                     <h2 className='text-2xl text-gray-700'>Price: $<span className='text-emerald-700 text-3xl'>{order?.price}</span></h2>
                     <p className='text-2xl text-gray-700'>Total Price: $<span className='text-emerald-700 text-3xl'>{totalPrice}</span></p>

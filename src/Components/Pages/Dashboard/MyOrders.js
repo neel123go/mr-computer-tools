@@ -58,7 +58,10 @@ const MyOrders = () => {
                             <td className='p-0 py-1 text-center'>{order.quantity}</td>
                             <td className='p-0 py-1 text-center'>
                                 {(order.price && !order?.paid) && <label onClick={() => setCancelOrder(order)} htmlFor="delete-modal" className="btn-tiny modal-button px-3 py-2 rounded-lg btn-error">Cancel</label>}
-                                {(order.price && order?.paid) ? <span className='bg-green-300 px-4 py-2 rounded-lg'>Paid</span> : <Link to={`/dashboard/payment/${order._id}`}><button className='btn-tiny mx-3 px-5 h-8 rounded-lg btn-primary'>Pay</button></Link>}
+                                {(order.price && order?.paid) ? <>
+                                    <span className='bg-green-300 px-4 py-2 rounded-lg'>Paid</span>
+                                    <span className='text-green-600 block mt-3'>Transaction id: {order?.transactionId}</span>
+                                </> : <Link to={`/dashboard/payment/${order._id}`}><button className='btn-tiny mx-3 px-5 h-8 rounded-lg btn-primary'>Pay</button></Link>}
                             </td>
                         </tr>))}
                     </tbody>
