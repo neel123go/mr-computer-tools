@@ -3,6 +3,8 @@ import Banner from '../Banner/Banner';
 import BusinessSummary from '../BusinessSummary/BusinessSummary';
 import Tools from '../Tools/Tools';
 import Reviews from '../Reviews/Reviews';
+import TopBrands from '../TopBrands/TopBrands';
+import LatestBlogs from '../LatestBlogs/LatestBlogs';
 
 const Home = () => {
     return (
@@ -11,6 +13,8 @@ const Home = () => {
             <Tools />
             <BusinessSummary />
             <Reviews />
+            <TopBrands />
+            <LatestBlogs />
         </div>
     );
 };

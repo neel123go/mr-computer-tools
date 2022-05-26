@@ -3,7 +3,7 @@ import { GlobeIcon, UserGroupIcon, StarIcon } from '@heroicons/react/solid';
 
 const BusinessSummary = () => {
     return (
-        <div className='px-7 md:px-20 lg:px-26 xl:px-32 mb-10'>
+        <div className='px-7 md:px-20 lg:px-26 xl:px-32 mb-10 mt-16'>
             <h2 className='text-4xl font-bold ml-2 md:text-4xl mt-10 text-warning' style={{ fontFamily: 'Changa, sans-serif' }}>Our Business Summary</h2>
             <div className='w-1/2 md:w-1/4 lg:w-1/6 h-1 mt-2 rounded-lg bg-error'></div>
             <div className='w-full rounded-xl mt-10 h-full bg-primary p-5 sm:p-10 lg:p-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>

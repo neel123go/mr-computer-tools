@@ -56,7 +56,7 @@ const ManageOrders = () => {
                             <td className='p-0 py-1 text-center'>{tools?.description.slice(0, 50) + '..'}</td>
                             <td className='p-0 py-1 text-center'>{tools?.minQty}</td>
                             <td className='p-0 py-1 text-center'>{tools?.availableQty}</td>
-                            <td className='p-0 py-1 text-center'><label onClick={() => setDeleteProduct(tools)} htmlFor="delete-product-modal" className="btn-tiny modal-button px-3 py-2 rounded-lg btn-error">Delete</label></td>
+                            <td className='p-0 py-1 text-center pr-2'><label onClick={() => setDeleteProduct(tools)} htmlFor="delete-product-modal" className="btn-tiny modal-button px-3 py-2 rounded-lg btn-error">Delete</label></td>
                         </tr>))}
                     </tbody>
                 </table> : <p className='text-center text-lg sm:text-3xl py-5'>You do not have any products yet</p>}

@@ -83,10 +83,10 @@ const ManageOrders = () => {
                             <td className='p-0 py-1 text-center'>{order?.productName}</td>
                             <td className='p-0 py-1 text-center'>$ {order?.price}</td>
                             <td className='p-0 py-1 text-center'>{order?.quantity}</td>
-                            <td className='p-0 py-1 text-center'>
+                            <td className='p-0 py-1 text-center pr-2'>
                                 {(order.price && !order?.paid) && <>
                                     <label onClick={() => setCancelOrder(order)} htmlFor="delete-modal" className="btn-tiny modal-button px-3 py-2 rounded-lg btn-error">Cancel</label>
-                                    <label htmlFor="delete-modal" className="ml-2 btn-tiny modal-button px-3 py-2 rounded-lg btn-error">Unpaid</label>
+                                    <label className="ml-2 btn-tiny modal-button px-3 py-2 rounded-lg btn-error">Unpaid</label>
                                 </>}
                                 {order?.paid && <button onClick={() => handleStatus(order?._id, order?.transactionId)} className={`px-4 py-2 rounded-lg ${order?.status === 'pending' ? "bg-indigo-300" : "bg-green-300"}`}>{order.status}</button>}
                             </td>

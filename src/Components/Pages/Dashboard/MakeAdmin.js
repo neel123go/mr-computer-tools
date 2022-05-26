@@ -61,7 +61,7 @@ const MakeAdmin = () => {
                             <th className='text-center'>{index + 1}</th>
                             <td className='p-0 py-1 text-center'>{user?.userName}</td>
                             <td className='p-0 py-1 text-center'>{user?.email}</td>
-                            <td className='p-0 py-1 text-center'>
+                            <td className='p-0 py-1 text-center pr-3'>
                                 {user?.role !== 'admin' ? <button onClick={() => makeAdmin(user?.email)} className='btn-tiny bg-orange-400 text-gray-800 font-bolder px-4 py-2 rounded-lg'>Make Admin</button> : <p className='text-green-600' style={{ fontSize: '18px' }}>Admin</p>}
                             </td>
                         </tr>))}

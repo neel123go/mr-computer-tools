@@ -48,6 +48,8 @@ const Header = () => {
 
                 <ul className='hidden md:flex gap-6 items-center'>
                     <li><NavLink className='focus:text-indigo-500 uppercase text-gray-800 px-4 rounded-lg py-2' to='/home'>home</NavLink></li>
+                    <li><NavLink className='focus:text-indigo-500 uppercase text-gray-800 px-4 rounded-lg py-2' to='/blogs'>Blogs</NavLink></li>
+                    <li><NavLink className='focus:text-indigo-500 uppercase text-gray-800 px-4 rounded-lg py-2' to='/myPortfolio'>My Portfolio</NavLink></li>
                     {user ? <>
                         <li><NavLink className='focus:text-indigo-500 uppercase text-gray-800 px-4 rounded-lg py-2' to='/dashboard'>Dashboard</NavLink></li>
                         <li className='transition ease-linear uppercase duration-300 hover:rounded-lg border-b-4 border-primary hover:bg-primary cursor-pointer focus:text-indigo-500 text-gray-800 px-4 py-2' onClick={handleLogout}>Logout</li>

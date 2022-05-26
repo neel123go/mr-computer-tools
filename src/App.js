@@ -18,6 +18,9 @@ import ManageProducts from './Components/Pages/Dashboard/ManageProducts';
 import RequireAdmin from './Components/Pages/LoginRegister/RequireAdmin';
 import RequireNormalUser from './Components/Pages/LoginRegister/RequireNormalUser';
 import Payment from './Components/Pages/Dashboard/Payment';
+import NotFound from './Components/Pages/Shared/NotFound';
+import Blogs from './Components/Pages/Blogs/Blogs';
+import MyPortfolio from './Components/Pages/MyPortfolio/MyPortfolio';
 
 function App() {
   return (
@@ -75,6 +78,9 @@ function App() {
             </RequireAdmin>
           }></Route>
         </Route>
+        <Route path='/blogs' element={<Blogs></Blogs>}></Route>
+        <Route path='/myPortfolio' element={<MyPortfolio />}></Route>
+        <Route path='*' element={<NotFound></NotFound>}></Route>
       </Routes>
       <Footer></Footer>
       <Toaster
