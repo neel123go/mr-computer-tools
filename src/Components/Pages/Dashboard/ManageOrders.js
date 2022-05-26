@@ -92,7 +92,7 @@ const ManageOrders = () => {
                             </td>
                         </tr>))}
                     </tbody>
-                </table> : <p className='text-center text-lg sm:text-3xl py-5'>You do not have any users yet</p>}
+                </table> : <p className='text-center text-lg sm:text-3xl py-5'>You do not have any orders yet</p>}
                 {cancelOrder && <CancelOrderModal refetch={refetch} cancelOrder={cancelOrder}></CancelOrderModal>}
             </div>
         </div>

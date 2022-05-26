@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import Loading from '../Shared/Loading';
 
 const AddProduct = () => {
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
+    const [loading, setLoading] = useState(false);
     const imgbbKey = "70f09fbd10e67daf3577b0ecd3b6ea41";
 
     const onSubmit = (data) => {
+        setLoading(true);
         const image = data.image[0];
         const formData = new FormData();
         formData.append('image', image);
@@ -40,14 +43,20 @@ const AddProduct = () => {
                         .then(toolInserted => {
                             if (toolInserted.insertedId) {
                                 toast.success('Product added successfully');
+                                setLoading(false);
                                 reset();
                             } else {
                                 toast.error('Something went wrong! Please try again');
+                                setLoading(false);
                             }
                         })
                 }
             })
     }
+
+    if (loading) {
+        return <Loading></Loading>
+    };
 
     return (
         <div>
