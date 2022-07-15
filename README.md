@@ -7,3 +7,8 @@ Live site link - [https://mr-computer-tools.web.app/](https://mr-computer-tools.
 * After login, you can buy tools & you can also add reviews.
 * You can payment your orders by debit card if you wish.
 * If you are an admin user, you can add products, manage products, manage all user orders and you can also make admin any normal user.
+
+# Admin Login
+
+* Email - computeruser@gmail.com
+* Password - COMPUTERuser
